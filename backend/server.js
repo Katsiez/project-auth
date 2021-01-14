@@ -97,7 +97,7 @@ app.get('/', (req, res) => {
   res.send(endpoints(app));
 });
 
-// Sign-up
+// Sign-up/ create a new user
 //i added email?
 app.post('/users', async (req, res) => {
   try {
@@ -107,6 +107,7 @@ app.post('/users', async (req, res) => {
       password, 
       email
       }).save();
+      //we may have accessToken:user.accessToken missing here
     res.status(200).json({ userId: user._id });
   } catch (err) {
     res.status(400).json({ message: 'Could not create user', errors: err });
@@ -140,6 +141,13 @@ app.get('/user/:id/profile', async (req,res) => {
 
 console.log(`Authenticated req.user._id: ${req.user._id}`)
 console.log(`Requested.user._id: ${user._id}`)
+
+// Endpoint that shows a page to the user when logged in
+// app.get('/welcome', authenticateUser)
+// app.get('/welcome', (req, res) => {
+//   const welcomeMessage = `This is a welcome message for ${req.user.name}`
+//   res.status(201).json({ welcomeMessage })
+// })
 
 
   if(req.user._id === user._id){

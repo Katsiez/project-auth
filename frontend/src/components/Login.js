@@ -88,5 +88,5 @@ const Label = styled.label`
 	flex-direction: column;
 	align-self: center;
 	color: #fbcdc4;
-  font-size: 15px;
-  `
+	font-size: 15px;
+`

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 const URL = 'http://localhost:8080/users';
 const SECRET_URL = 'http://localhost:8080/secret';
 
-export const Profile = () => {
+export const UserProfile = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((store) => store.user.login.accessToken);
   const userId = useSelector((store) => store.user.login.userId);
@@ -93,4 +93,4 @@ export const Profile = () => {
     </section>
   );
 };
-export default Profile;
+export default UserProfile;
