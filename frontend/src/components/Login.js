@@ -51,12 +51,12 @@ export const Login = () => {
 return (
     <Form>
       <Input onSubmit={handleLogin}>
-        <Label> Email
+        <Label> EMAIL:
         <InputField placeholder="email" type="email"
             value={email} onChange={event => setEmail(event.target.value)} />
         </Label>
 
-        <Label> Password:
+        <Label> PASSWORD:
         <InputField placeholder="password" type="password"
             value={password} onChange={event => setPassword(event.target.value)} />
         </Label>
