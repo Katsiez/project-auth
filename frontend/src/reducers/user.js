@@ -4,7 +4,9 @@ const initialState = {
   login: {
     accessToken: null,
     userId: 0,
-    statusMessage: "",
+    name:'',
+    email:'',
+    secretMessage: '',
   },
 };
 
@@ -22,15 +24,34 @@ export const user = createSlice({
       console.log(`User Id: ${userId}`);
       state.login.userId = userId;
     },
-    setStatusMessage: (state, action) => {
-      const { statusMessage } = action.payload;
-      console.log(`Status Message: ${statusMessage}`);
-      state.login.statusMessage = statusMessage;
+     setName: (state, action) => {
+      const { name } = action.payload;
+      console.log(`Name: ${name}`);
+      state.login.name = name;
     },
+    // setStatusMessage: (state, action) => {
+    //   const { statusMessage } = action.payload;
+    //   console.log(`Status Message: ${statusMessage}`);
+    //   state.login.statusMessage = statusMessage;
+    // },
+    //   setErrorMessage: (state, action) => {
+    //   const { errorMessage } = action.payload;
+    //   console.log(`Error Message: ${errorMessage}`);
+    //   state.login.statusMessage = errorMessage;
+    // },
+    setSecret: (state, action) => {
+      const { secretText } = action.payload;
+      console.log(` Secret Message: ${secretText}`);
+      state.login.secretText = secretText;
+    },
+
     logout: (state, action) => {
       console.log("Logging out");
       state.login.userId = 0;
+      state.login.email = '';
+      state.login.name = '';
       state.login.accessToken = null;
+      state.login.secretMessage = '';
     },
   },
 });

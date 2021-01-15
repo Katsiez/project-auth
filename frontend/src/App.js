@@ -61,7 +61,7 @@ export const App = () => {
             <SignUp />
           </Route>
           <Route path="/sessions" exact>
-            <Login />
+            <Login/>
           </Route>
         </Switch>
       </BrowserRouter>

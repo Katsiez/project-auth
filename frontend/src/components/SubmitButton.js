@@ -3,11 +3,13 @@ import styled from "styled-components"
 
 export const SubmitButton = ({ title, onClick, onSubmit }) => {
 	return (
-		<MainContainer 
-			onSubmit={onSubmit} 
-			onClick={onClick}>
+    <MainContainer 
+    // what are these functions for?
+			// onSubmit={onSubmit} 
+      // onClick={onClick}
+      >
 			<TextField>
-				{title}
+        {title}
 			</TextField>
 		</MainContainer>
 	)
@@ -18,7 +20,7 @@ const MainContainer = styled.button`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	width: 20%;
+	width: 30%;
 	background-color: #8a383e;
 	border: none;
 	margin: 8px auto;

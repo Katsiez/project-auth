@@ -8,6 +8,7 @@
     "bcrypt": "^5.0.0",
     "bcrypt-nodejs": "0.0.3",
     "crypto": "^1.0.1",
+    "polished": "^4.0.5",
     "react-animate-text": "^0.4.0",
     "react-animated-bg": "^1.1.2"
   }

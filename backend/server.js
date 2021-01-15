@@ -108,7 +108,7 @@ app.get('/', (req, res) => {
 });
 
 // Sign-up/ create a new user
-//i added email?
+//i added email here
 app.post('/users', async (req, res) => {
   try {
     const { name, password, email } = req.body;
@@ -118,7 +118,7 @@ app.post('/users', async (req, res) => {
       email
       }).save();
       //we may have accessToken:user.accessToken missing here
-    res.status(200).json({ userId: user._id });
+    res.status(200).json({ userId: user._id, accessToken: user.accessToken });
   } catch (err) {
     res.status(400).json({ message: 'Could not create user', errors: err });
   }
@@ -142,15 +142,15 @@ app.post('/sessions', async (req, res) => {
 
 
 // Secure endpoint, user needs to be logged in to access this.
-app.get('/users/:id/profile', authenticateUser);
-app.get('/user/:id/profile', async (req,res) => {
-  const user = await User.findOne({_id:req.params.id});
-  const publicProfileMessage = `Hello, ${user.name}, this public message is for you.`
-  const privateProfileMessage = `Hello, ${user.name}, this private message is for you.`
-  res.status(200).json({profileMessage});
+// app.get('/users/:id/profile', authenticateUser);
+// app.get('/user/:id/profile', async (req,res) => {
+//   const user = await User.findOne({_id:req.params.id});
+//   const publicProfileMessage = `Hello, ${user.name}, this public message is for you.`
+//   const privateProfileMessage = `Hello, ${user.name}, this private message is for you.`
+//   res.status(200).json({profileMessage});
 
-console.log(`Authenticated req.user._id: ${req.user._id}`)
-console.log(`Requested.user._id: ${user._id}`)
+// console.log(`Authenticated req.user._id: ${req.user._id}`)
+// console.log(`Requested.user._id: ${user._id}`)
 
 // Endpoint that shows a page to the user when logged in
 // app.get('/welcome', authenticateUser)
@@ -160,15 +160,15 @@ console.log(`Requested.user._id: ${user._id}`)
 // })
 
 
-  if(req.user._id === user._id){
-    ///Private
-    res.status(200).json({profileMessage: privateProfileMessage})
-  }else{
-    //Public
-    res.status(200).json({profileMessage: publicProfileMessage})
-  }
+  // if(req.user._id === user._id){
+  //   ///Private
+  //   res.status(200).json({profileMessage: privateProfileMessage})
+  // }else{
+  //   //Public
+  //   res.status(200).json({profileMessage: publicProfileMessage})
+  // }
   //decide private of public
-});
+//});
 
 // Logout
 app.post('/users/logout', authenticateUser);
@@ -183,14 +183,26 @@ app.post('/users/logout', async (req, res) => {
 });
 
 
-//get user specific info
-// app.get('/users/:id/secrets', (req, res) => {
-//   const secret = `{Hello, ${req.user.name}, this secret message is for you.}`
-//   res.status(201).json({secret})
-// });
+//get user specific info, secret page in userprofile
+app.get('/users/:id/secret', authenticateUser);
+app.get('/users/:id/secret', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    if (userId != req.user._id) {
+      console.log(
+        "Authenticated user does not have access to this secret.  It's someone else's!"
+      );
+      throw 'Access denied';
+    }
+    const secretMessage = `This is a secret message for ${req.user.name}`;
+    res.status(200).json({ secretMessage });
+  } catch (err) {
+    res.status(403).json({ error: 'Access Denied' });
+  }
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
 
-//added this comment to check if the branch works

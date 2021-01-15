@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { rgba } from 'polished'
+
 
 export const InputField = ({ placeholder, type, value, onChange, minLength }) => {
   return (
@@ -12,9 +14,20 @@ export const InputField = ({ placeholder, type, value, onChange, minLength }) =>
 		required/>
   )
 }
-
-const Input = styled.label`
-	font-family: 'Xanh Mono', monospace;
-	width: 60%; 
-	background-color: #be1f01;
+const Input = styled.input`
+border-bottom: 10px solid #a73e42;
+border-top:none;
+border-left:none;
+border-right:none;
+text-decoration:none;
+border-radius: 20px;
+background-color: ${rgba('#a1bdc8', 0.5)};
+box-shadow: inset 0 -2px 1px rgba(0, 0, 0, 0.03);
+font-style: italic;
+font-weight: 300;
+font-size: 20px;
+width: 70%;
+padding: 10px;
+font-family: 'Xanh Mono', monospace;
+margin: 30px;
 `
