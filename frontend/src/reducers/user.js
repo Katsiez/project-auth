@@ -7,6 +7,7 @@ const initialState = {
     name:'',
     email:'',
     secretMessage: '',
+    loggedIn:false
   },
 };
 
@@ -45,6 +46,10 @@ export const user = createSlice({
       state.login.secretText = secretText;
     },
 
+    // toggleLoggedState:(state, action) => {
+    //   state.login.actions =
+
+    // },
     logout: (state, action) => {
       console.log("Logging out");
       state.login.userId = 0;

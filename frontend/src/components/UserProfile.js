@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { user } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
-import setLoggedIn from "./Login"
+
 
 
 const SECRET_URL = 'http://localhost:8080/users';

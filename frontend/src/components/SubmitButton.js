@@ -4,9 +4,8 @@ import styled from "styled-components"
 export const SubmitButton = ({ title, onClick, onSubmit }) => {
 	return (
     <MainContainer 
-    // what are these functions for?
-			// onSubmit={onSubmit} 
-      // onClick={onClick}
+			onSubmit={onSubmit} 
+      onClick={onClick}
       >
 			<TextField>
         {title}

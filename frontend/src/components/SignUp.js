@@ -14,111 +14,143 @@ import { rgba } from 'polished'
 const SIGNUP = "https://project-auth-liza-kat.herokuapp.com/users"
 
 export const SignUp = () => {
-	// const [inputValue, setInputValue] = useState({
-	// 	name: "",
-	// 	email: "",
-	// 	password: "",
-  //   });
-  //const [page, setPage] = useState('signup');
-  const dispatch = useDispatch();
   const [name, setName] = useState('');
    const[email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signUpFailed, setSignUpFailed] = useState(false);
-  const [signUpSuccess, setSignUpSuccess] = useState('false');
-  //const error = useSelector((store) => store.user.errorMessage);
+  const [signUpSuccess, setSignUpSuccess] = useState(false);
 
 	const handleFormSubmit = (event) => {
 		event.preventDefault();
 		fetch(SIGNUP, {
 		  method: "POST",
 		  body: JSON.stringify({
-			name, password, email
+      name, 
+      password,
+       email
 		  }),
 		  headers: { "Content-Type": "application/json" },
     })
-    .then((res) => {
-      if(!res.ok) {
-        throw new Error('Could not create account. Please try again');
-      }
-      return res.json();
-      setSignUpSuccess(true);
-    })
-    .then((json) => {
-      dispatch(user.actions.setUserId({ userId: json.userId }));
-      dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }));
-      })
-      .catch((err)=> alert(err))
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.accessToken) {
+          localStorage.setItem("accessToken", json.accessToken);
+          localStorage.setItem("userID", json.id);
+		      localStorage.setItem("signedUp", JSON.stringify(true));
+		    setSignUpSuccess(true)
+		}
+	  })
+	  .catch(() => {
+		  setSignUpFailed(true)
+	  })
+	  .finally(() => {
+		  setName("")
+		  setEmail("")
+		  setPassword("")
+	  });
   };
+return (
+    <Image>
+      <Form onSubmit={handleFormSubmit}>
+        <Text>Sign up</Text>
+        <InputField
+          name="name"
+          label="Name"
+		  type="name"
+		  value={name}
+          placeholder="name"
+		  onChange={(event) => setName(event.target.value)}
+		  minLength="5"
+        />
+        <InputField
+          name="email"
+          label="Email"
+		  type="email"
+		  value={email}
+          placeholder="email"
+		  onChange={(event) => setEmail(event.target.value)}
+          minLength="3"
+        />
+        <InputField
+          name="password"
+          label="Password"
+		  type="password"
+		  value={password}
+          placeholder="password"
+		  onChange={(event) => setPassword(event.target.value)}
+          minLength="6"
+        />
 
+		{signUpSuccess && (
+          <span>
+            <Text>
+              You're all signed-up!
+            </Text>
+          </span>
+        )}
+        {signUpFailed && (
+          <span>
+            <Text>
+              Failed to sign up. Please ensure that all fields have been filled
+              out and try again.
+            </Text>
+          </span>
+        )}
+        <SubmitButton title="Sign up" />
+      </Form>
+    </Image>
+  );
+};
 
-		  // .then((res) => res.json())
-		  // .then((json) => {
-			// if (json.accessToken) {
-			//   localStorage.setItem("accessToken", json.accessToken);
-			//   localStorage.setItem("userID", json.id);
-			//   localStorage.setItem("signedUp", JSON.stringify(true));
-			//   setSignedUp(JSON.parse(localStorage.getItem("signedUp")));
-			// } else if (!json.signUpSuccessful) {
-			// 	setSignUpFailed(true);
-			// }
-		  // });
+// 	  return (
+//       <>
+// {signUpSuccess? 
+//   (	<Image>
+// 		<Form onSubmit={handleFormSubmit}>
+// 		  <Text>Sign up</Text>
 	
-		// setInputValue({
-		//   name: "",
-		//   email: "",
-		//   password: "",
-		// });
-	  // };
-	  return (
-      <>
-{signUpSuccess? 
-  (	<Image>
-		<Form onSubmit={handleFormSubmit}>
-		  <Text>Sign up</Text>
+// 		  <InputField
+// 			name="name"
+// 			label="Name"
+// 			type="name"
+//       placeholder="name"
+//       onChange={(event) => setName(event.target.value)}
+// 			value={name}
+// 			minLength="5"
+// 		  />
+// 		  <InputField
+// 			name="email"
+// 			label="Email"
+// 			type="email"
+//       placeholder="email"
+//       onChange={(event) => setEmail(event.target.value)}
+// 			value={email}
+// 			minLength="3"
+// 		  />
+// 		  <InputField
+// 			name="password"
+// 			label="Password"
+// 			type="password"
+//       placeholder="password"
+//       onChange={(event) => setPassword(event.target.value)}
+// 			value={password}
+// 			minLength="6"
+// 		  />
 	
-		  <InputField
-			name="name"
-			label="Name"
-			type="name"
-      placeholder="name"
-      onChange={(event) => setName(event.target.value)}
-			value={name}
-			minLength="5"
-		  />
-		  <InputField
-			name="email"
-			label="Email"
-			type="email"
-      placeholder="email"
-      onChange={(event) => setEmail(event.target.value)}
-			value={email}
-			minLength="3"
-		  />
-		  <InputField
-			name="password"
-			label="Password"
-			type="password"
-      placeholder="password"
-      onChange={(event) => setPassword(event.target.value)}
-			value={password}
-			minLength="6"
-		  />
-	
-		  {signUpFailed && <span><Text>Failed to sign up. Please ensure that all fields have been filled out and try again.</Text></span>}
-	<SubmitButton
-  title="Sign up"
-/>
-		</Form>
-		</Image>
-	  ) : ( 
-    <Redirect>
-      <Redirect to="/secret">
-      </Redirect>
-   </Redirect>
-   )};
-    </>
-    )};
+// 		  {signUpFailed && <span><Text>Failed to sign up. Please ensure that all fields have been filled out and try again.</Text></span>}
+// 	<SubmitButton
+//   title="Sign up"
+// />
+// 		</Form>
+// 		</Image>
+// 	  ) : ( 
+//     <Redirect>
+//       <Redirect to="/secret">
+//       </Redirect>
+//    </Redirect>
+//    )};
+//     </>
+//     )};
  
 	
 	const Image = styled.main`
