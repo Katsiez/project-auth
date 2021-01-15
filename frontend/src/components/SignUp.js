@@ -5,17 +5,17 @@ import { Link } from 'react-router-dom'
 
 import {SubmitButton} from "./SubmitButton"
 import {InputField} from "./InputField"
-//import {UserProfile} from "./UserProfile";
 
 import styled from "styled-components"
 import { rgba } from 'polished'
+import { UserProfile } from "./UserProfile";
 
 
-const SIGNUP = "https://project-auth-liza-kat.herokuapp.com/users"
+const SIGNUP = "http://localhost:8080/users"
 
 export const SignUp = () => {
   const [name, setName] = useState('');
-   const[email, setEmail] = useState('');
+  const[email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signUpFailed, setSignUpFailed] = useState(false);
   const [signUpSuccess, setSignUpSuccess] = useState(false);
@@ -27,7 +27,7 @@ export const SignUp = () => {
 		  body: JSON.stringify({
       name, 
       password,
-       email
+      email
 		  }),
 		  headers: { "Content-Type": "application/json" },
     })
@@ -82,11 +82,8 @@ return (
         />
 
 		{signUpSuccess && (
-          <span>
-            <Text>
-              You're all signed-up!
-            </Text>
-          </span>
+      
+          <UserProfile />  
         )}
         {signUpFailed && (
           <span>

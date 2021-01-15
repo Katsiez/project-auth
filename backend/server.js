@@ -81,6 +81,7 @@ app.post("/sessions", async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+    console.log(user);
     if (user && bcrypt.compareSync(password, user.password)) {
       res.status(200).json({ userId: user._id, accessToken: user.accessToken });
       //compare passwords
@@ -97,6 +98,12 @@ app.post("/sessions", async (req, res) => {
       .status(404)
       .json({ notFound: true, message: "Incorrect username and/or password" });
   }
+});
+
+app.get("/profile", authenticateUser);
+app.get("/profile", (req, res) => {
+  const welcomeMessage = `Hi ${req.user.name}! Nice to see you here.`;
+  res.status(201).json({ welcomeMessage });
 });
 
 // Secure endpoint, user needs to be logged in to access this.
@@ -312,23 +319,23 @@ app.listen(port, () => {
 // });
 
 
-// //get user specific info, secret page in userprofile
-// app.get('/users/:id/secret', authenticateUser);
-// app.get('/users/:id/secret', async (req, res) => {
-//   try {
-//     const userId = req.params.id;
-//     if (userId != req.user._id) {
-//       console.log(
-//         "Authenticated user does not have access to this secret.  It's someone else's!"
-//       );
-//       throw 'Access denied';
-//     }
-//     const secretMessage = `This is a secret message for ${req.user.name}`;
-//     res.status(200).json({ secretMessage });
-//   } catch (err) {
-//     res.status(403).json({ error: 'Access Denied' });
-//   }
-// });
+//get user specific info, secret page in userprofile
+app.get('/users/:id/secret', authenticateUser);
+app.get('/users/:id/secret', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    if (userId != req.user._id) {
+      console.log(
+        "Authenticated user does not have access to this secret.  It's someone else's!"
+      );
+      throw 'Access denied';
+    }
+    const secretMessage = `This is a secret message for ${req.user.name}`;
+    res.status(200).json({ secretMessage });
+  } catch (err) {
+    res.status(403).json({ error: 'Access Denied' });
+  }
+});
 
 // // Start the server
 // app.listen(port, () => {

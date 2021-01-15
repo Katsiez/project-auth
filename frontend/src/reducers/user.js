@@ -30,20 +30,11 @@ export const user = createSlice({
       console.log(`Name: ${name}`);
       state.login.name = name;
     },
-    // setStatusMessage: (state, action) => {
-    //   const { statusMessage } = action.payload;
-    //   console.log(`Status Message: ${statusMessage}`);
-    //   state.login.statusMessage = statusMessage;
-    // },
-    //   setErrorMessage: (state, action) => {
-    //   const { errorMessage } = action.payload;
-    //   console.log(`Error Message: ${errorMessage}`);
-    //   state.login.statusMessage = errorMessage;
-    // },
+  
     setSecret: (state, action) => {
-      const { secretText } = action.payload;
-      console.log(` Secret Message: ${secretText}`);
-      state.login.secretText = secretText;
+      const { secretMessage } = action.payload;
+      console.log(` Secret Message: ${secretMessage}`);
+      state.login.secretMessage = secretMessage;
     },
 
     // toggleLoggedState:(state, action) => {

@@ -64,7 +64,7 @@ export const App = () => {
           <Route path="/sessions" exact>
             <Login/>
           </Route>
-          <Route path="/secret" exact>
+          <Route path="/`${userId}secret`" exact>
             <UserProfile/>
           </Route>
         </Switch>
