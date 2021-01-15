@@ -42,6 +42,7 @@ import { user } from "./reducers/user";
 import { Home } from "./components/Home"
 import { Login } from "./components/Login";
 import { SignUp } from "./components/SignUp";
+import { UserProfile } from "./components/UserProfile";
 
 
 //const URL = "https://project-auth-liza-kat.herokuapp.com/users"
@@ -62,6 +63,9 @@ export const App = () => {
           </Route>
           <Route path="/sessions" exact>
             <Login/>
+          </Route>
+          <Route path="/secret" exact>
+            <UserProfile/>
           </Route>
         </Switch>
       </BrowserRouter>

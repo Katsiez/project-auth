@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { InputField } from "./InputField.js";
 import { SubmitButton } from "./SubmitButton.js";
-import { Welcome } from "./Welcome.js";
 import { Link } from 'react-router-dom'
 
 import styled from 'styled-components'
 import { rgba } from 'polished'
+import UserProfile from "./UserProfile.js";
 
 const LOGIN = "https://project-auth-liza-kat.herokuapp.com/sessions"
 
@@ -30,10 +30,10 @@ export const Login = ({ setLoggedIn }) => {
       .then((res) => res.json())
       .then((json) => {
         if (json.accessToken) {
-          localStorage.setItem("accessToken", json.accessToken);
-          localStorage.setItem("userID", json.id);
-          localStorage.setItem("signedIn", JSON.stringify(true));
-          setLoggedIn(JSON.parse(localStorage.getItem("signedIn")));
+          // localStorage.setItem("accessToken", json.accessToken);
+          // localStorage.setItem("userID", json.id);
+          // localStorage.setItem("signedIn", JSON.stringify(true));
+          // setLoggedIn(JSON.parse(localStorage.getItem("signedIn")));
           setLoginSuccess(true);
         } else if (!json.signUpSuccessful) {
           setLoginFailed(true);
@@ -106,7 +106,7 @@ export const Login = ({ setLoggedIn }) => {
         )} 
 
       {loginSuccess && ( 
-      <Welcome />
+      <UserProfile />
         )} 
 
     </Form>

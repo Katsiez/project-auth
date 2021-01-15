@@ -1,28 +1,31 @@
 import React, {useState} from "react"
 import { useDispatch } from 'react-redux';
 import { user } from "../reducers/user";
+import { Link } from 'react-router-dom'
+
 import {SubmitButton} from "./SubmitButton"
 import {InputField} from "./InputField"
-//import {UserProfile} from "./UserProfile"
+//import {UserProfile} from "./UserProfile";
 
 import styled from "styled-components"
 import { rgba } from 'polished'
-import UserProfile from "./UserProfile";
+
 
 const SIGNUP = "https://project-auth-liza-kat.herokuapp.com/users"
 
-export const SignUp = ({}) => {
+export const SignUp = () => {
 	// const [inputValue, setInputValue] = useState({
 	// 	name: "",
 	// 	email: "",
 	// 	password: "",
   //   });
-  const [page, setPage] = useState('signup');
+  //const [page, setPage] = useState('signup');
   const dispatch = useDispatch();
   const [name, setName] = useState('');
    const[email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signUpFailed, setSignUpFailed] = useState(false);
+  const [signUpSuccess, setSignUpSuccess] = useState('false');
   //const error = useSelector((store) => store.user.errorMessage);
 
 	const handleFormSubmit = (event) => {
@@ -39,6 +42,7 @@ export const SignUp = ({}) => {
         throw new Error('Could not create account. Please try again');
       }
       return res.json();
+      setSignUpSuccess(true);
     })
     .then((json) => {
       dispatch(user.actions.setUserId({ userId: json.userId }));
@@ -68,7 +72,8 @@ export const SignUp = ({}) => {
 	  // };
 	  return (
       <>
-{page === 'signup' ? (	<Image>
+{signUpSuccess? 
+  (	<Image>
 		<Form onSubmit={handleFormSubmit}>
 		  <Text>Sign up</Text>
 	
@@ -106,9 +111,13 @@ export const SignUp = ({}) => {
 />
 		</Form>
 		</Image>
-	  ) : ( <UserProfile setPage={setPage} />  )
-  };
-  </>
+	  ) : ( 
+    <Redirect>
+      <Redirect to="/secret">
+      </Redirect>
+   </Redirect>
+   )};
+    </>
     )};
  
 	
@@ -145,4 +154,8 @@ export const SignUp = ({}) => {
 	  text-transform: uppercase;
 	  margin-top: 30px;
 	  letter-spacing: 2px;
+  `;
+  const Redirect = styled(Link)`
+  text-decoration: none;
+  width:30%
   `;
