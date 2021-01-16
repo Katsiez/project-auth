@@ -70,7 +70,7 @@ app.post("/users", async (req, res) => {
     console.log("!!!", name, email, password);
     const user = new User({ name, email, password: bcrypt.hashSync(password) })
     await user.save()
-    res.status(201).json({ message: 'User created!', id: user._id, accessToken: user.accessToken })
+    res.status(201).json({ message: 'User created!', id: user._id, accessToken: user.accessToken, name: user.name })
   } catch (err) {
     res.status(400).json({ message: 'Could not create user!', errors: err.errors })
   }
@@ -83,7 +83,7 @@ app.post("/sessions", async (req, res) => {
     const user = await User.findOne({ email });
     console.log(user);
     if (user && bcrypt.compareSync(password, user.password)) {
-      res.status(200).json({ userId: user._id, accessToken: user.accessToken });
+      res.status(200).json({ userId: user._id, accessToken: user.accessToken, name: user.name });
       //compare passwords
     } else {
       res

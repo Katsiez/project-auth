@@ -32,19 +32,18 @@ export const SignUp = () => {
 		  }),
 		  headers: { "Content-Type": "application/json" },
     })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.accessToken) {
-        localStorage.setItem("accessToken", json.accessToken);
-        localStorage.setItem("userID", json.id);
-		    localStorage.setItem("signedUp", JSON.stringify(true));
-        setSignUpSuccess(true)
-		}
-    })
-     .then((json) => {
+     
+       .then((json) => {
+        //localStorage.setItem("accessToken", json.accessToken);
+        //localStorage.setItem("userID", json.id);
+        //localStorage.setItem("signedUp", JSON.stringify(true));
+        //email
+      dispatch(user.actions.setName({name: json.name})); 
       dispatch(user.actions.userId({userId: json.userId})); 
-      dispatch(user.actions.setAccessToken({ accessToken: json. accessToken}));
-       // console.log(accessToken);
+      dispatch(user.actions.setAccessToken({ accessToken: json.accessToken}));
+      setSignUpSuccess(true) 
+        
+      // console.log(accessToken);
          })
 	  .catch(() => {
 		  setSignUpFailed(true)
@@ -55,6 +54,8 @@ export const SignUp = () => {
 		  setPassword("")
 	  });
   };
+  console.log(signUpSuccess)
+   console.log(signUpFailed)
 return (
     <Image>
       <Form onSubmit={handleFormSubmit}>

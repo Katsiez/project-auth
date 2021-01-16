@@ -29,19 +29,28 @@ export const Login = () => {
       }),
       headers: { "Content-Type": "application/json" },
     })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.accessToken) {
-          localStorage.setItem("accessToken", json.accessToken);
-          localStorage.setItem("userID", json.id);
-          localStorage.setItem("signedUp", JSON.stringify(true));
-          setLogInSuccess(true);
+     .then((res) => {
+        if (!res.ok) {
+          throw new Error('Could not login.');
         }
+        return res.json();
       })
+
+      //.then((res) => res.json())
+      // .then((json) => {
+      //   if (json.accessToken) {
+      //     localStorage.setItem("accessToken", json.accessToken);
+      //     localStorage.setItem("userID", json.id);
+      //     localStorage.setItem("signedUp", JSON.stringify(true));
+      //     setLogInSuccess(true);
+      //   }
+      //})
        .then((json) => {
-          dispatch(user.actions.setAccessToken({ accessToken: json.accessToken}));
-          dispatch(user.actions.setUserId({ userId: json.userId}));
-        //testProfile(json.accessToken);
+        dispatch(user.actions.setAccessToken({ accessToken: json.accessToken}));
+        dispatch(user.actions.setUserId({ userId: json.userId}));
+        dispatch(user.actions.setName({name: json.name})); 
+        setLogInSuccess(true);
+          //testProfile(json.accessToken);
       })
       .catch(() => {
         setLogInFailed(true);
@@ -75,16 +84,16 @@ export const Login = () => {
           placeholder="password"
           onChange={(event) => setPassword(event.target.value)}
           minLength="6"
-        />   
-        <SubmitButton title="Log in" />
-      </Form>
-       {logInFailed && (
+        />  
+        {logInFailed && (
           <span>
             <Text>
               Failed to log in. Email and/or password incorrect. Please try again.
             </Text>
           </span>
-        )}
+        )} 
+        <SubmitButton title="Log in" />
+      </Form>
     </Image>
     )}; 
   </>

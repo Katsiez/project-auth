@@ -22,7 +22,7 @@ export const UserProfile = () => {
     dispatch(user.actions.logout());
     setLoggedOut(true);
   }
-  const testProfile = (accessToken, userId) => {
+  const testProfile = () => {
     // Include userId in the path
     fetch(`${URL}/${userId}/secret`, {
       method: "GET",
@@ -63,6 +63,7 @@ export const UserProfile = () => {
         title='Test'
         onClick={testProfile}>
       </SubmitButton>
+      <Text>{`${secretMessage}`}</Text>
       </Image> 
     ) : ( <Home />)
 }

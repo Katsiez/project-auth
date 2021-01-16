@@ -7,7 +7,9 @@ const initialState = {
     name:'',
     email:'',
     secretMessage: '',
-    loggedIn:false
+    loggedIn:false,
+    //success:false,
+    //failure:false
   },
 };
 
@@ -26,9 +28,9 @@ export const user = createSlice({
       state.login.userId = userId;
     },
      setName: (state, action) => {
-      const { name } = action.payload;
-      console.log(`Name: ${name}`);
-      state.login.name = name;
+      //const { name } = action.payload;
+      console.log(`Name: ${action.payload}`);
+      state.login.name = action.payload;
     },
   
     setSecret: (state, action) => {
@@ -49,5 +51,12 @@ export const user = createSlice({
       state.login.accessToken = null;
       state.login.secretMessage = '';
     },
+
+    // // setSignUpSuccess: (state, action) => {
+    // //   state.success = action.payload
+    // // },
+    // //  setSignUpFailed: (state, action) => {
+    // //    state.failure = action.payload
+    // // }
   },
 });
