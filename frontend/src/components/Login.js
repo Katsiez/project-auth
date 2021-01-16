@@ -38,10 +38,11 @@ export const Login = () => {
           setLogInSuccess(true);
         }
       })
-      //  .then((json) => {
-      //     dispatch(user.actions.setAccessToken({ accessToken: json. accessToken}));
+       .then((json) => {
+          dispatch(user.actions.setAccessToken({ accessToken: json.accessToken}));
+          dispatch(user.actions.setUserId({ userId: json.userId}));
         //testProfile(json.accessToken);
-      // })
+      })
       .catch(() => {
         setLogInFailed(true);
       })
@@ -75,15 +76,15 @@ export const Login = () => {
           onChange={(event) => setPassword(event.target.value)}
           minLength="6"
         />   
-        {logInFailed && (
+        <SubmitButton title="Log in" />
+      </Form>
+       {logInFailed && (
           <span>
             <Text>
               Failed to log in. Email and/or password incorrect. Please try again.
             </Text>
           </span>
         )}
-        <SubmitButton title="Log in" />
-      </Form>
     </Image>
     )}; 
   </>

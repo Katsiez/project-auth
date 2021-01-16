@@ -39,11 +39,13 @@ export const SignUp = () => {
         localStorage.setItem("userID", json.id);
 		    localStorage.setItem("signedUp", JSON.stringify(true));
         setSignUpSuccess(true)
-        //dispatch(user.actions.name({name: json.name})); 
-        //dispatch(user.actions.setAccessToken({ accessToken: json. accessToken}));
-       // console.log(accessToken);
 		}
-	  })
+    })
+     .then((json) => {
+      dispatch(user.actions.userId({userId: json.userId})); 
+      dispatch(user.actions.setAccessToken({ accessToken: json. accessToken}));
+       // console.log(accessToken);
+         })
 	  .catch(() => {
 		  setSignUpFailed(true)
 	  })
@@ -102,64 +104,13 @@ return (
     </Image>
   );
 };
-
-// 	  return (
-//       <>
-// {signUpSuccess? 
-//   (	<Image>
-// 		<Form onSubmit={handleFormSubmit}>
-// 		  <Text>Sign up</Text>
-	
-// 		  <InputField
-// 			name="name"
-// 			label="Name"
-// 			type="name"
-//       placeholder="name"
-//       onChange={(event) => setName(event.target.value)}
-// 			value={name}
-// 			minLength="5"
-// 		  />
-// 		  <InputField
-// 			name="email"
-// 			label="Email"
-// 			type="email"
-//       placeholder="email"
-//       onChange={(event) => setEmail(event.target.value)}
-// 			value={email}
-// 			minLength="3"
-// 		  />
-// 		  <InputField
-// 			name="password"
-// 			label="Password"
-// 			type="password"
-//       placeholder="password"
-//       onChange={(event) => setPassword(event.target.value)}
-// 			value={password}
-// 			minLength="6"
-// 		  />
-	
-// 		  {signUpFailed && <span><Text>Failed to sign up. Please ensure that all fields have been filled out and try again.</Text></span>}
-// 	<SubmitButton
-//   title="Sign up"
-// />
-// 		</Form>
-// 		</Image>
-// 	  ) : ( 
-//     <Redirect>
-//       <Redirect to="/secret">
-//       </Redirect>
-//    </Redirect>
-//    )};
-//     </>
-//     )};
- 
 	
 	const Image = styled.main`
-	background-image: url("${process.env.PUBLIC_URL + "/flower.jpg"}");
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	background-size: cover;
+	  background-image: url("${process.env.PUBLIC_URL + "/flower.jpg"}");
+	  position: fixed;
+	  width: 100%;
+	  height: 100%;
+	  background-size: cover;
   `;
   const Form = styled.form`
 	  display: flex;
@@ -189,6 +140,6 @@ return (
 	  letter-spacing: 2px;
   `;
   const Redirect = styled(Link)`
-  text-decoration: none;
-  width:30%
+    text-decoration: none;
+    width:30%
   `;
