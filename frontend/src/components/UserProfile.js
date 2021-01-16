@@ -6,6 +6,7 @@ import { rgba } from "polished";
 
 import { user } from "../reducers/user";
 import { SubmitButton } from "./SubmitButton";
+import { Home } from "./Home"
 
 const URL = 'http://localhost:8080/users';
 
@@ -14,9 +15,12 @@ export const UserProfile = () => {
   const accessToken = useSelector((store) => store.user.login.accessToken);
   const userId = useSelector((store) => store.user.login.userId);
   const secretMessage = useSelector((store) => store.user.login.secretMessage );
+  const name = useSelector((store) => store.user.login.name);
+  const[loggedOut, setLoggedOut] = useState(false);
   
   const handleLogout = () => {
     dispatch(user.actions.logout());
+    setLoggedOut(true);
   }
   const testProfile = (accessToken, userId) => {
     // Include userId in the path
@@ -42,11 +46,13 @@ export const UserProfile = () => {
 
   return (
     <>
+    {loggedOut === false ? (
     <Image>
       <Form>
       <Text>User's Profile</Text>
-      {/* <p> {`${userId}`}</p>
-      <h4>{accessToken}</h4> */}
+        <Text> Hello, {`${name}`}</Text>
+     <Text> {`${userId}`}</Text>
+      <Text>{`${accessToken}`}</Text> 
       <Text> Hello, user. Reveal your secret by pressing the Test button</Text> 
       </Form>
       <SubmitButton 
@@ -57,8 +63,9 @@ export const UserProfile = () => {
         title='Test'
         onClick={testProfile}>
       </SubmitButton>
-      <Text>{secretMessage}</Text>
       </Image> 
+    ) : ( <Home />)
+}
     </>
   );
 };
@@ -126,4 +133,3 @@ const Form = styled.form`
     margin-top: 10px;
   }
 `;
-

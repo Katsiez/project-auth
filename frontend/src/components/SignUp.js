@@ -14,6 +14,7 @@ import { UserProfile } from "./UserProfile";
 const SIGNUP = "http://localhost:8080/users"
 
 export const SignUp = () => {
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const[email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -34,10 +35,13 @@ export const SignUp = () => {
       .then((res) => res.json())
       .then((json) => {
         if (json.accessToken) {
-          localStorage.setItem("accessToken", json.accessToken);
-          localStorage.setItem("userID", json.id);
-		      localStorage.setItem("signedUp", JSON.stringify(true));
-		    setSignUpSuccess(true)
+        localStorage.setItem("accessToken", json.accessToken);
+        localStorage.setItem("userID", json.id);
+		    localStorage.setItem("signedUp", JSON.stringify(true));
+        setSignUpSuccess(true)
+        //dispatch(user.actions.name({name: json.name})); 
+        //dispatch(user.actions.setAccessToken({ accessToken: json. accessToken}));
+       // console.log(accessToken);
 		}
 	  })
 	  .catch(() => {
