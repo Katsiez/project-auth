@@ -84,7 +84,7 @@ const handleFormSubmit = (event) => {
     </Image>
     )}; 
   </>
-  )
+  );
 };
 
 const Image = styled.main`

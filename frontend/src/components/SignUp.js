@@ -54,6 +54,8 @@ export const SignUp = () => {
   };
 
 return (
+  <>
+  {signUpSuccess === true ? (<UserProfile />):(
     <Image>
       <Form onSubmit={handleFormSubmit}>
         <Text>Sign up</Text>
@@ -84,11 +86,6 @@ return (
 		  onChange={(event) => setPassword(event.target.value)}
           minLength="6"
         />
-
-		{signUpSuccess && (
-      
-          <UserProfile />  
-        )}
         {signUpFailed && (
           <span>
             <Text>
@@ -100,6 +97,8 @@ return (
         <SubmitButton title="Sign up" />
       </Form>
     </Image>
+  )};
+  </>
   );
 };
 	
@@ -136,8 +135,4 @@ return (
 	  text-transform: uppercase;
 	  margin-top: 30px;
 	  letter-spacing: 2px;
-  `;
-  const Redirect = styled(Link)`
-    text-decoration: none;
-    width:30%
   `;
