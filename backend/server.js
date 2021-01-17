@@ -95,7 +95,6 @@ app.post("/sessions", async (req, res) => {
         name: user.name,
         email: user.email,
         password:user.password});
-      //compare passwords
     } else {
       res
         .status(404)
@@ -109,39 +108,6 @@ app.post("/sessions", async (req, res) => {
       .status(404)
       .json({ notFound: true, message: "Incorrect username and/or password" });
   }
-});
-
-app.get("/profile", authenticateUser);
-app.get("/profile", (req, res) => {
-  const welcomeMessage = `Hi ${req.user.name}! Nice to see you here.`;
-  res.status(201).json({ welcomeMessage });
-});
-
-// Secure endpoint, user needs to be logged in to access this.
-
-app.get("/users/:id/profile", authenticateUser);
-app.get("/secret", async (req, res) => {
-  const secretMessage = `This is a secret message for ${req.user.name}`;
-  res.status(200).json({ secretMessage });
-});
-//get user specific info
-app.get("/users/:id/profile", authenticateUser);
-app.get("/users/:id/profile", async (req, res) => {
-  const user = await User.findOne({ _id: req.params.id });
-  const secretMsgPrivate = `{Hello, ${user.name}, this secret message is for you.}`;
-  const secretMsgPublic = `{Hello, ${user.name}, this public message is for you.}`;
-
-  //Decide private or public
-  if (req.user._id === user._id) {
-    res.status(200).json({ secretMsgPrivate });
-  } else {
-    res.status(200).json({ secretMsgPublic });
-  }
-});
-
-// Start the server
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
 });
 
 //get user specific info, secret page in userprofile
@@ -162,8 +128,7 @@ app.get('/users/:id/secret', async (req, res) => {
   }
 });
 
-// // Start the server
-// app.listen(port, () => {
-//   console.log(`Server running on http://localhost:${port}`);
-// });
-
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
+});
