@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { SubmitButton } from "./SubmitButton";
 import { InputField } from "./InputField";
 import {UserProfile} from "./UserProfile"
-import { Link } from 'react-router-dom'
 import { user } from "../reducers/user";
 
 import styled from "styled-components";
@@ -19,46 +18,34 @@ export const Login = () => {
   const [logInFailed, setLogInFailed] = useState(false);
   const [logInSuccess, setLogInSuccess] = useState(false);
 
-  const handleFormSubmit = (event) => {
-    event.preventDefault();
-    fetch(LOGIN, {
-      method: "POST",
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-      headers: { "Content-Type": "application/json" },
+const handleFormSubmit = (event) => {
+		event.preventDefault();
+		fetch(LOGIN, {
+		  method: "POST",
+		  body: JSON.stringify({ 
+      password,
+      email
+		  }),
+		  headers: { "Content-Type": "application/json" },
     })
-     .then((res) => {
-        if (!res.ok) {
-          throw new Error('Could not login.');
-        }
-        return res.json();
-      })
-
-      //.then((res) => res.json())
-      // .then((json) => {
-      //   if (json.accessToken) {
-      //     localStorage.setItem("accessToken", json.accessToken);
-      //     localStorage.setItem("userID", json.id);
-      //     localStorage.setItem("signedUp", JSON.stringify(true));
-      //     setLogInSuccess(true);
-      //   }
-      //})
-       .then((json) => {
-        dispatch(user.actions.setAccessToken({ accessToken: json.accessToken}));
-        dispatch(user.actions.setUserId({ userId: json.userId}));
-        dispatch(user.actions.setName({name: json.name})); 
-        setLogInSuccess(true);
-          //testProfile(json.accessToken);
-      })
-      .catch(() => {
-        setLogInFailed(true);
-      })
-      .finally(() => {
-        setEmail("");
-        setPassword("");
-      });
+    .then((res) => {
+      if(!res.ok) {
+        throw new Error('Could not create account. Please try again');
+      }
+      return res.json();
+    })
+    .then((json) => {
+      dispatch(user.actions.setUserId({userId: json.id})); 
+      dispatch(user.actions.setAccessToken({ accessToken: json.accessToken}));
+      setLogInSuccess(true);   
+    })
+	  .catch(() => {
+		  setLogInFailed(true);
+	  })
+	  .finally(() => {
+		  setEmail("")
+		  setPassword("")
+	  });
   };
 
   return (
@@ -152,7 +139,3 @@ const Text = styled.text`
     margin-top: 10px;
   }
 `;
-const Redirect = styled(Link)`
-  text-decoration: none;
-  width:30%
-  `;

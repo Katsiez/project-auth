@@ -29,32 +29,27 @@ export const UserProfile = () => {
       // Include the accessToken to get the protected endpoint
       headers: { Authorization: accessToken },
     })
-      .then((res) => {
-        if (!res.ok) {
-          throw "Profile test failed";
-        }
+    .then((res) => {
+      if (!res.ok) {
+        throw "Profile test failed";
+      }
         return res.json();
-      })
-      .then((json)=>{
-        console.log("Hey");
-        dispatch(user.actions.setSecret({secretMessage: json.secretMessage}));
-      })
-      .catch((err) => alert(err)); 
-      //dispatch(user.actions.setErrorMessage({ errorMessage: error.toString() }));
+    })
+    .then((json)=>{
+      dispatch(user.actions.setSecret({secretMessage: json.secretMessage}));
+    })
+    .catch((err) => alert(err)); 
   };
 
 
   return (
-    <>
+   <>
     {loggedOut === false ? (
     <Image>
-      <Form>
+      <Container>
       <Text>User's Profile</Text>
-        <Text> Hello, {`${name}`}</Text>
-     <Text> {`${userId}`}</Text>
-      <Text>{`${accessToken}`}</Text> 
       <Text> Hello, user. Reveal your secret by pressing the Test button</Text> 
-      </Form>
+      </Container>
       <SubmitButton 
         title ='Logout' 
         onClick={handleLogout}>  
@@ -63,11 +58,11 @@ export const UserProfile = () => {
         title='Test'
         onClick={testProfile}>
       </SubmitButton>
-      <Text>{`${secretMessage}`}</Text>
-      </Image> 
+      <Text1>{`${secretMessage}`}</Text1>
+    </Image> 
     ) : ( <Home />)
-}
-    </>
+    }
+   </>
   );
 };
 
@@ -78,18 +73,8 @@ const Image = styled.main`
 	height: 100%;
 	background-size: cover;
   `;
-  const Content = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 60%;
-  margin-bottom: 30px;
-    /* margin: 300px auto; */
-  margin: 100px auto;
-  align-items: center;
-  justify-content: center;
-  padding: 5px;
-`
-const Form = styled.form`
+
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 30%;
@@ -117,6 +102,28 @@ const Form = styled.form`
   font-size: 20px;
   flex-direction: column;
   color: #a73e42;
+  font-weight: bold;
+  font-family: "Xanh Mono", monospace;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 30px;
+  letter-spacing: 2px;
+  @media (max-width: 950px) {
+    font-size: 17px;
+    margin-top: 10px;
+  }
+  @media (max-width: 660px) {
+    font-size: 17px;
+    margin-top: 10px;
+  }`;
+  const Text1 = styled.text`
+  display: flex;
+  padding: 10px;
+  font-size: 25px;
+  flex-direction: column;
+  color: white;
   font-weight: bold;
   font-family: "Xanh Mono", monospace;
   align-items: center;

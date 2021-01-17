@@ -28,9 +28,9 @@ export const user = createSlice({
       state.login.userId = userId;
     },
      setName: (state, action) => {
-      //const { name } = action.payload;
-      console.log(`Name: ${action.payload}`);
-      state.login.name = action.payload;
+      const { name } = action.payload;
+      console.log(`Name: ${name}`);
+      state.login.name = name;
     },
   
     setSecret: (state, action) => {

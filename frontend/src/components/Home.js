@@ -23,8 +23,6 @@ export const Home = () => {
       </AnimatedBg>
       <TextFinal>Created by Kat and Liza</TextFinal>
       </Content>
-      {/* these are buttons login redirects to sessions and sign up redirects to users,
-       title we find in submit button component, there functions onclick and onsubmit */}
         <ButtonContainer>
           <Redirect to="/sessions">
             <SubmitButton title='Login' />
@@ -49,8 +47,7 @@ const Content = styled.div`
   flex-direction: column;
   width: 60%;
   margin-bottom: 30px;
-    /* margin: 300px auto; */
-  margin: 100px auto;
+  margin: 150px auto;
   align-items: center;
   justify-content: center;
   padding: 5px;

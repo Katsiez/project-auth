@@ -16,7 +16,7 @@ const SIGNUP = "http://localhost:8080/users"
 export const SignUp = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
-  const[email, setEmail] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signUpFailed, setSignUpFailed] = useState(false);
   const [signUpSuccess, setSignUpSuccess] = useState(false);
@@ -32,19 +32,17 @@ export const SignUp = () => {
 		  }),
 		  headers: { "Content-Type": "application/json" },
     })
-     
-       .then((json) => {
-        //localStorage.setItem("accessToken", json.accessToken);
-        //localStorage.setItem("userID", json.id);
-        //localStorage.setItem("signedUp", JSON.stringify(true));
-        //email
-      dispatch(user.actions.setName({name: json.name})); 
-      dispatch(user.actions.userId({userId: json.userId})); 
+    .then((res) => {
+      if(!res.ok) {
+        throw new Error('Could not create account. Please try again');
+      }
+      return res.json();
+    })
+    .then((json) => {
+      dispatch(user.actions.setUserId({userId: json.id})); 
       dispatch(user.actions.setAccessToken({ accessToken: json.accessToken}));
-      setSignUpSuccess(true) 
-        
-      // console.log(accessToken);
-         })
+      setSignUpSuccess(true)   
+    })
 	  .catch(() => {
 		  setSignUpFailed(true)
 	  })
@@ -54,8 +52,7 @@ export const SignUp = () => {
 		  setPassword("")
 	  });
   };
-  console.log(signUpSuccess)
-   console.log(signUpFailed)
+
 return (
     <Image>
       <Form onSubmit={handleFormSubmit}>
